@@ -5,29 +5,20 @@ import os
 import sys
 from configparser import ConfigParser
 import ast
+from data_loader import DataLoader
 
 
 def main():
   config = ConfigParser()
+  data_loader = DataLoader()
   
   config.read('/Users/marshallfelder/Documents/Pet Projects/config/config.ini')
-  
   headers = ast.literal_eval(config.get('coin', 'headers'))
   url = ast.literal_eval(config.get('coin', 'url'))
   parameters = ast.literal_eval(config.get('coin', 'parameters'))
-  session = Session()
-  
-  def fetch_data(session, url, parameters, headers):
-    session.headers.update(headers)
-    try:
-      response = session.get(url, params=parameters)
-      data = json.loads(response.text)
-    except (ConnectionError, Timeout, TooManyRedirects) as e:
-      print(e)
-      sys.exit(1)
-    return data
 
-  data = fetch_data(session, url, parameters, headers)
+  session = data_loader.connect_to_api(config, headers)
+  data = data_loader.fetch_data(session, url, parameters)
   
   print(data['data'])
 
