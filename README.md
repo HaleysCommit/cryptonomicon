@@ -1,7 +1,7 @@
 lambo-soon
 ==============================
 
-Fundamental/Technical a/Behavioiral analysis of crypto projects
+Fundamental/Technical/Behaviorial analysis of crypto projects
 
 Project Organization
 ------------
